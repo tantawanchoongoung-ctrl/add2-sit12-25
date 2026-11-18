@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
 void main() {
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
@@ -16,87 +18,148 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  // ส่วนแสดงสถิติ 1 ช่อง (ตัวเลข + ป้ายชื่อ)
+  Widget buildStat(String number, String label) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          number,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+        ),
+        Text(label, style: const TextStyle(fontSize: 14)),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // 1. AppBar
       appBar: AppBar(
         title: const Text(
-            'หน้าแรก',
-          style: TextStyle(
-            color: Colors.black,//สีอักษร
-            backgroundColor: Colors.amber,//สีพื้นหลัง
-            fontSize: 32,//ขนาดอักษร
-            fontWeight: FontWeight.w800,//ความหนาอักษร
-          ),
+          'thantawan_sun',
+          style: TextStyle(fontWeight: FontWeight.w500),
         ),
-        leading: Text("Leading"),
-        actions: [
-          Icon(
-            Icons.menu,//ชื่อไอคอน
-            size: 60, //ขนาด
-            color: Colors.blue,//สี
-          ),
-          Icon(Icons.person)
+        centerTitle: false,
+        actions: const [
+          Icon(Icons.menu),
+          SizedBox(width: 16),
         ],
       ),
-      body: Column(
-        children:[
-          Text("Hello"),
-          Text("Lunar"),
-          Text("ลูน่ามาแล้วววววว"),
-          Text("ดีจ้าาาคุนยายยยยย"),
-          Row(
-            children: [
-              //
-              Image.network( //ดึงภาพจากลิงค์
-                  "https://i.pinimg.com/736x/b5/a7/3a/b5a73a69b658417481b2f765735d3181.jpg"
-                  ,width: 200,//กว้าง
-                height: 200,//สูง
-                fit: BoxFit.cover,
-              ),
-              ClipOval( //ดัดเป็นวงรี
-                child:Image.asset(
-                  "assets/_.jpeg"
-                  ,width: 200,
-                  height: 200,
-                  fit: BoxFit.cover,)
-              )
 
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(//ขยาย
-                  child: ElevatedButton(
-                      onPressed: () => {},
-                      child: Text("ปุ่ม ลูน่าเอง"),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amber,
-                      foregroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)
-                      )
-                    )
-                  )
-              ),
-              SizedBox(
-                width: 20, //เว้นแนวนอน
-                height: 100,//เว้นแนวตั้ง
-              ),
-              Expanded(
-                  child: OutlinedButton(onPressed: () => {},
-                      child: Text("ปุ่ม คุนยาย"),
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: Colors.orangeAccent,
+      // 2-6 อยู่ใน body: SingleChildScrollView > Column
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  // 2. ส่วนหัวโปรไฟล์: รูปซ้าย สถิติ 3 ช่องขวา
+                  Row(
+                    children: [
+                      const CircleAvatar(
+                        radius: 55,
+                        backgroundImage: AssetImage('assets/รูป.jpg'),
                       ),
-                  )
-              )
-            ],
-          )
-        ]
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            buildStat('3', 'โพสต์'),
+                            buildStat('146', 'ผู้ติดตาม'),
+                            buildStat('1,213', 'กำลังติดตาม'),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // 3. ชื่อและแคปชั่น (ชิดซ้าย)
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'ทันตะวัน ชุนกวง',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Text('นักศึกษาแผนกเทคโนโลยีสารสนเทศ'),
+                        Text('หลงใหลในการเขียน Flutter 💙'),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // 4. ปุ่ม: ติดตาม + ข้อความ แบ่งครึ่งเท่ากัน
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FilledButton(
+                          onPressed: () {},
+                          child: const Text('ติดตาม'),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {},
+                          child: const Text('ข้อความ'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // 5. แถบไอคอน
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.grid_on, size: 28),
+                      Icon(Icons.person_pin, size: 28),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            ),
+
+            // 6. แกลเลอรีภาพ 3 คอลัมน์ (เต็มความกว้างหน้าจอ)
+            GridView.count(
+              crossAxisCount: 3,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisSpacing: 2,
+              mainAxisSpacing: 2,
+              children: [
+                Image.network(
+                  'https://i.pinimg.com/736x/94/4c/78/944c7884611c5079cd203434ce517de3.jpg',
+                  fit: BoxFit.cover,
+                ),
+                Image.network(
+                  'https://i.pinimg.com/736x/7a/f7/cc/7af7cc6063df7f0cffd0c2ea3ba488d1.jpg',
+                  fit: BoxFit.cover,
+                ),
+                Image.network(
+                  'https://i.pinimg.com/736x/be/e8/59/bee8598221af4d567a90aaa222fa3c81.jpg',
+                  fit: BoxFit.cover,
+                ),
+              ],
+            ),
+          ],
         ),
-      );
+      ),
+    );
   }
 }
